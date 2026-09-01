@@ -1,0 +1,28 @@
+# Betriebssystem
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Typst-Tooling (nur die gebauten *.pdf gehören ins Repo, nicht das Werkzeug)
+lib.typ
+build.sh
+assets/
+*.typ
+
+# Echte Secrets NIEMALS committen (Vorlagen mit .example schon)
+**/db_password.txt
+**/*.secret
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Übungs-Spielwiesen der Studierenden
+sandbox/
+*/sandbox/
+spielwiese/

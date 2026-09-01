@@ -1,0 +1,5 @@
+# Was NICHT ins Image-Build gehört (hält den Build-Kontext klein):
+__pycache__/
+*.pyc
+aufgaben.md
+aufgaben.pdf

@@ -1,0 +1,46 @@
+# Wie Übung 05, aber das DB-Passwort steht NICHT mehr im Klartext in der Datei,
+# sondern kommt als Docker-Secret aus einer separaten Datei db_password.txt.
+#
+# Vorbereitung:  cp db_password.txt.example db_password.txt
+# (db_password.txt ist per .gitignore vom Repo ausgeschlossen.)
+
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: logbuch
+      POSTGRES_USER: logger
+      # Postgres liest das Passwort aus der Secret-Datei:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+    volumes:
+      - pgdaten:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  log_tool:
+    build: .
+    environment:
+      DB_HOST: db
+      DB_NAME: logbuch
+      DB_USER: logger
+      # log_tool liest das Passwort ebenfalls aus der Secret-Datei:
+      DB_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+    depends_on:
+      - db
+    profiles: ["werkzeug"]
+
+secrets:
+  db_password:
+    file: ./db_password.txt
+
+volumes:
+  pgdaten:

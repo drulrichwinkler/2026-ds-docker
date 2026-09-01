@@ -1,0 +1,38 @@
+# Derselbe Stack wie in Übung 04 – aber deklarativ statt vieler docker-run-Befehle.
+# Starten:   docker compose up -d
+# log_tool:  docker compose run --rm log_tool add "Nachricht"
+#            docker compose run --rm log_tool list
+# Stoppen:   docker compose down          (Volume bleibt)
+#            docker compose down -v        (Volume wird gelöscht)
+
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: logbuch
+      POSTGRES_USER: logger
+      POSTGRES_PASSWORD: geheim123
+    volumes:
+      - pgdaten:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  log_tool:
+    build: .
+    environment:
+      DB_HOST: db
+      DB_NAME: logbuch
+      DB_USER: logger
+      DB_PASSWORD: geheim123
+    depends_on:
+      - db
+    # Läuft nicht dauerhaft mit "up", sondern nur auf Abruf per "compose run":
+    profiles: ["werkzeug"]
+
+volumes:
+  pgdaten:
