@@ -16,6 +16,11 @@ services:
       - db_password
     volumes:
       - pgdaten:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U logger -d logbuch"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
 
   adminer:
     image: adminer
@@ -35,7 +40,8 @@ services:
     secrets:
       - db_password
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     profiles: ["werkzeug"]
 
 secrets:

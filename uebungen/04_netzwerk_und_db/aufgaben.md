@@ -62,6 +62,11 @@ docker run -d --name adminer --network lognetz -p 8080:8080 adminer
 
 # 4) log_tool-Image bauen und im Netzwerk ausführen
 docker build -t log-tool:db .
+
+# Kurz warten, bis Postgres beim ERSTEN Start fertig initialisiert ist
+# (sonst: "connection refused"). Bequem mit pg_isready abwarten:
+until docker exec db pg_isready -U logger -d logbuch >/dev/null 2>&1; do sleep 1; done
+
 docker run --rm --network lognetz \
   -e DB_HOST=db -e DB_NAME=logbuch -e DB_USER=logger -e DB_PASSWORD=geheim123 \
   log-tool:db add "Erster Eintrag in der Datenbank"

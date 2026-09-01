@@ -14,6 +14,12 @@ services:
       POSTGRES_PASSWORD: geheim123
     volumes:
       - pgdaten:/var/lib/postgresql/data
+    # Healthcheck: meldet "healthy", sobald die DB Anfragen annimmt.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U logger -d logbuch"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
 
   adminer:
     image: adminer
@@ -29,8 +35,10 @@ services:
       DB_NAME: logbuch
       DB_USER: logger
       DB_PASSWORD: geheim123
+    # Wartet, bis die DB wirklich BEREIT ist (nicht nur gestartet):
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     # Läuft nicht dauerhaft mit "up", sondern nur auf Abruf per "compose run":
     profiles: ["werkzeug"]
 
