@@ -22,6 +22,9 @@ __pycache__/
 *.pyc
 .venv/
 
+# Interne Bau-Anleitung (nicht für Studierende)
+HANDOFF.md
+
 # Übungs-Spielwiesen der Studierenden
 sandbox/
 */sandbox/
