@@ -67,12 +67,20 @@ uebungen/
 ├── 05_compose/                   Denselben Stack deklarativ mit Docker Compose
 ├── 06_secrets/                   Passwörter richtig behandeln (Secrets statt Env)
 ├── 07_capstone/                  Alles zusammen: log_tool + Postgres + Adminer
-└── 08_selbststudium_swarm_sandboxes/   Recherche: Docker Swarm & AI Sandboxes
+├── 08_selbststudium_swarm_sandboxes/   Recherche: Docker Swarm & AI Sandboxes
+└── 09_zusatzthemen/              Ausblick: Multiarch, Docker-in-Docker, Swarm
 ```
 
-Jede Übung enthält eine `aufgaben.md` (mit Aufgabenstellung **und** Musterlösung)
-sowie – wo nötig – Startdateien. Beginnen Sie mit
-`uebungen/01_python_in_docker/aufgaben.md`.
+Jede Übung enthält:
+
+- eine **`aufgaben.md`** – Aufgabenstellung **und** Musterlösung (praktischer Teil),
+- ein **`handout.md`** – erklärt das Thema ausführlicher als Hintergrund-Lektüre,
+- wo nötig **Startdateien** (`log_tool.py`, `Dockerfile`, `compose.yaml`, …).
+
+Zu jeder `.md` liegt ein fertiges **PDF** daneben. Der Dev-Container bringt einen
+**PDF-Betrachter** mit (VS-Code-Erweiterung *vscode-pdf*): Klicken Sie eine
+`aufgaben.pdf` / `handout.pdf` im Explorer einfach an. Beginnen Sie mit
+`uebungen/01_python_in_docker/handout.md` (Theorie) und dann `aufgaben.md` (Praxis).
 
 ## Werkzeuge im Überblick
 
