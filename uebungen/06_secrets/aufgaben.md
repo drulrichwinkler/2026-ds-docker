@@ -44,8 +44,9 @@ eingeblendet. PostgreSQL (`POSTGRES_PASSWORD_FILE`) und unser `log_tool`
 ```bash
 cd uebungen/06_secrets
 
-# 1) Das Leck vorführen: Passwort per Env -> per inspect wieder sichtbar
-docker run -d --name leak -e DB_PASSWORD=streng-geheim postgres:17
+# 1) Das Leck vorführen: Passwort per Env -> per inspect wieder sichtbar.
+#    (Ein simpler alpine-Container genügt; er läuft ruhig vor sich hin.)
+docker run -d --name leak -e DB_PASSWORD=streng-geheim alpine sleep 300
 docker inspect leak --format '{{range .Config.Env}}{{println .}}{{end}}' | grep DB_PASSWORD
 #   -> DB_PASSWORD=streng-geheim   (im Klartext auslesbar!)
 docker rm -f leak
